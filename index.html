@@ -151,25 +151,29 @@ let cat='all';
 const $=(s,r=document)=>r.querySelector(s);
 function form(id){const t=T[L];$(id).innerHTML=`<label>${t.n}<input name="name" autocomplete="name" required></label><label>${t.e}<input name="email" type="email" autocomplete="email" required></label><label>${t.s}<select name="service">${t.o.map(x=>`<option>${x}</option>`).join('')}</select></label><label>${t.m}<textarea name="message" required></textarea></label><button class="btn" type="submit" style="align-self:flex-start">${t.snd}</button><p class="msg" role="status"></p>`}
 function mail(p){const sub=encodeURIComponent((L=='es'?'Presupuesto: ':'Quote: ')+p.n),body=encodeURIComponent(L=='es'?`Hola Tinta! Me interesa la estampa "${p.n}". ¿Me pasan presupuesto? Cantidad de variantes de color y/o cambios que necesito: `:`Hi Tinta! I am interested in the print "${p.n}". Could you send me a quote? Color variants and/or changes I need: `);return `mailto:${MAIL}?subject=${sub}&body=${body}`}
+function ask(i){const p=P[i],f=$('#f2');if($('#pd').open)$('#pd').close();
+ f.elements.service.selectedIndex=0;
+ f.elements.message.value=L=='es'?`Hola Tinta! Me interesa la estampa "${p.n}". ¿Me pasan presupuesto? Cantidad de variantes de color y/o cambios que necesito: `:`Hi Tinta! I am interested in the print "${p.n}". Could you send me a quote? Color variants and/or changes I need: `;
+ $('.msg',f).textContent='';$('#dlg').showModal();f.elements.name.focus()}
 function show(src,alt){const g=$('#pbig');g.src=src;g.alt=alt;document.querySelectorAll('#pth button').forEach(b=>b.setAttribute('aria-current',b.dataset.s==src))}
 function openP(i){const p=P[i],x=L=='es'?0:1,sp=SPEC[L];
  const th=[[p.a,p.o?p.o[x]:(x?'View':'Ver')],...(p.b?[[p.b,'Mock-up']]:[]),...(p.w||[]).flatMap(v=>[[v[0],v[1+x]],...(v[3]?[[v[3],v[1+x]+' · mock-up']]:[])]),...(p.x||[]).map(v=>[v[0],v[1+x]])];
  $('#pth').innerHTML=th.map(u=>`<button type="button" data-s="${u[0]}" data-a="${u[1]}" title="${u[1]}" aria-label="${u[1]}"><img src="${u[0]}" alt="" width="64" height="64" loading="lazy"></button>`).join('');
  const cols=p.w?(L=='es'?p.w.length+1+' variantes: ':p.w.length+1+' colorways: ')+[p.o[x],...p.w.map(v=>v[1+x])].join(', ')+(L=='es'?'. Más variantes a pedido.':'. More variants on request.'):(p.u?(x?'Single colorway':'Variante única'):VC[x]);
  show(p.a,p.t);
- $('#pinfo').innerHTML=`<h3>${p.n}</h3><p>${p.d[x]}</p><dl><dt>${sp[0]}</dt><dd>${p.m}</dd><dt>${sp[1]}</dt><dd>PNG, TIFF, PDF</dd><dt>${sp[2]}</dt><dd>${p.k[x]}</dd><dt>${sp[3]}</dt><dd>${cols}</dd><dt>${sp[4]}</dt><dd>${TECH[x]}</dd></dl><a class="btn" href="${mail(p)}">${T[L].ask}</a>`;
+ $('#pinfo').innerHTML=`<h3>${p.n}</h3><p>${p.d[x]}</p><dl><dt>${sp[0]}</dt><dd>${p.m}</dd><dt>${sp[1]}</dt><dd>PNG, TIFF, PDF</dd><dt>${sp[2]}</dt><dd>${p.k[x]}</dd><dt>${sp[3]}</dt><dd>${cols}</dd><dt>${sp[4]}</dt><dd>${TECH[x]}</dd></dl><button class="btn ask" type="button" data-i="${i}">${T[L].ask}</button>`;
  $('#pd').showModal()}
 function render(){
  $('.filters').innerHTML=Object.keys(C).map(k=>`<button type="button" data-k="${k}" aria-pressed="${k==cat}">${C[k][L=='es'?0:1]}</button>`).join('');
  const l=P.filter(p=>cat=='all'||p.c==cat);
  $('#grid').innerHTML=l.map(p=>{const i=P.indexOf(p);
- return `<article class="card"><button class="im" type="button" data-i="${i}" aria-label="${p.n}"><img src="${p.a}" alt="${p.t}" width="900" height="1200" loading="lazy">${p.b?`<img src="${p.b}" alt="" width="900" height="1200" loading="lazy">`:''}</button><h3>${p.n}</h3><a class="btn" href="${mail(p)}">${T[L].ask}</a></article>`}).join('');
+ return `<article class="card"><button class="im" type="button" data-i="${i}" aria-label="${p.n}"><img src="${p.a}" alt="${p.t}" width="900" height="1200" loading="lazy">${p.b?`<img src="${p.b}" alt="" width="900" height="1200" loading="lazy">`:''}</button><h3>${p.n}</h3><button class="btn ask" type="button" data-i="${i}">${T[L].ask}</button></article>`}).join('');
  $('#empty').hidden=l.length>0;
  form('#f1');form('#f2');
 }
 function setLang(l){L=l;document.documentElement.lang=l;$('#lang').textContent=l=='es'?'EN':'ES';
  document.querySelectorAll('[data-en]').forEach(e=>{if(!e.dataset.es)e.dataset.es=e.innerHTML;e.innerHTML=l=='es'?e.dataset.es:e.dataset.en});render()}
-document.addEventListener('click',e=>{const b=e.target.closest('.filters button');if(b){cat=b.dataset.k;render()}const c=e.target.closest('.im[data-i]');if(c)openP(+c.dataset.i);const t=e.target.closest('#pth button');if(t)show(t.dataset.s,t.dataset.a||'');if(e.target.id=='pd')e.target.close()});
+document.addEventListener('click',e=>{const b=e.target.closest('.filters button');if(b){cat=b.dataset.k;render()}const c=e.target.closest('.im[data-i]');if(c)openP(+c.dataset.i);const q=e.target.closest('.ask');if(q)ask(+q.dataset.i);const t=e.target.closest('#pth button');if(t)show(t.dataset.s,t.dataset.a||'');if(e.target.id=='pd')e.target.close()});
 $('#pclose').onclick=()=>$('#pd').close();
 $('#lang').onclick=()=>setLang(L=='es'?'en':'es');
 const bg=$('.burger'),nv=$('#nav');
