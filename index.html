@@ -59,7 +59,7 @@ h2{font-weight:500;font-size:clamp(2rem,6vw,4.4rem);line-height:1.05;letter-spac
 .svc h3{font-weight:500;font-size:1.15rem;margin-bottom:6px}.svc p{color:var(--mute);font-size:.93rem}
 .rv{opacity:0;transform:translateY(24px);transition:opacity .9s,transform .9s}.rv.on{opacity:1;transform:none}
 .trend{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,40px);margin-top:48px}
-.trend figcaption{color:var(--mute);font-size:.78rem;margin-top:8px}
+.trend.one{grid-template-columns:1fr}.trend figcaption{color:var(--mute);font-size:.78rem;margin-top:8px}
 .files{margin-top:64px;border-top:1px solid var(--ink);padding-top:16px}.files h3{font-weight:500;font-size:1.15rem;margin-bottom:6px}.files p{color:var(--mute);font-size:.93rem;max-width:46em}
 .card .im{display:block;width:100%;border:0;padding:0;cursor:zoom-in}
 #pd{width:min(94vw,1000px);max-height:92vh;overflow:auto;padding:20px}.pw{display:grid;grid-template-columns:1.1fr 1fr;gap:28px}.pw .big{width:100%;max-height:72vh;object-fit:contain;background:var(--soft)}.th{display:flex;gap:8px;margin-top:8px}.th button{border:1px solid var(--line);background:var(--soft);padding:0;width:64px;height:64px;cursor:pointer}.th button[aria-current=true]{border-color:var(--ink)}.th img{width:100%;height:100%;object-fit:cover}.pw h3{font-weight:500;font-size:1.6rem;margin-bottom:8px}.pw p{color:var(--mute);font-size:.93rem;margin-bottom:16px}.pw dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:.85rem;margin-bottom:22px}.pw dt{font-weight:500}.pw dd{margin:0;color:var(--mute)}
@@ -116,10 +116,7 @@ nav.open{transform:none}.svc,.trend{grid-template-columns:1fr}.grid{gap:18px 14p
 <div class="rv"><h3 data-en="Custom prints">Estampas a medida</h3><p data-en="We design a print only for your brand, with my guidance throughout the process.">Diseñamos una estampa solo para tu marca, con mi asesoramiento durante todo el proceso.</p></div>
 <div class="rv"><h3 data-en="Trend research &amp; advice">Búsqueda de tendencias y asesoramiento</h3><p data-en="We study what is coming and turn it into a direction for your collection.">Estudiamos lo que viene y lo convertimos en una dirección para tu colección.</p></div>
 </div>
-<div class="trend">
-<figure class="rv"><img src="img/tendencia-01.jpg" alt="Informe de tendencia de florales para primavera" width="800" height="1000" loading="lazy"><figcaption data-en="Trend report: florals">Informe de tendencia: florales</figcaption></figure>
-<figure class="rv"><img src="img/tendencia-02.jpg" alt="Informe de tendencia: flores en movimiento y prenda como paisaje" width="800" height="1000" loading="lazy"><figcaption data-en="Trend report: flowers in motion">Informe de tendencia: flores en movimiento</figcaption></figure>
-</div>
+<div class="trend one"><figure class="rv"><img src="img/mundo-de-tinta.jpg" alt="Collage de Tinta Studio: flor de tinta, recortes de revista, muestras Pantone y estampa animal" width="1600" height="1000" loading="lazy"><figcaption data-en="The wonderful world of Tinta">El maravilloso mundo de Tinta</figcaption></figure></div>
 <div class="files rv"><h3 data-en="Delivery and formats">Entrega y formatos</h3><p data-en="You receive the final file (not editable) in PNG, TIFF or PDF, as a seamless repeat or a single design, by Drive or WeTransfer. Files prepared for screen printing, sublimation, embroidery and digital printing. Color variants and file changes are quoted on request.">Recibís el archivo final (no editable) en PNG, TIFF o PDF, en repetición o diseño único, por Drive o WeTransfer. Archivos preparados para serigrafía, sublimación, bordado y estampa digital. Las variantes de color y los cambios al archivo se cotizan a pedido.</p></div>
 </section>
 <section id="sobre" class="about">
@@ -138,18 +135,14 @@ nav.open{transform:none}.svc,.trend{grid-template-columns:1fr}.grid{gap:18px 14p
 <button class="btn fab" id="fab" type="button">Get in touch</button>
 <dialog id="pd"><button class="x" type="button" aria-label="Cerrar" id="pclose">×</button><div class="pw"><div><img class="big" id="pbig" src="" alt=""><div class="th" id="pth"></div></div><div id="pinfo"></div></div></dialog>
 <dialog id="dlg"><button class="x" type="button" aria-label="Cerrar" id="close">×</button><form id="f2" novalidate></form></dialog>
+<script src="estampas.js"></script>
 <script>
-const MAIL='esto.es.tinta.studio@gmail.com',KEY='PEGAR_ACCESS_KEY_DE_WEB3FORMS';
+const MAIL='esto.es.tinta.studio@gmail.com',KEY='26e5312a-a65f-42d3-b1ef-33c63ae2157a';
 let L='es';
-const P=[
-{c:'floral',n:'Floral 01',a:'img/floral-01-rapport.jpg',b:'img/floral-01-mockup.jpg',t:'Estampa floral en repetición, vista en campera',d:['Flores pintadas con tinta en rojo y negro sobre fondo crudo, en repetición continua.','Flowers painted with ink in red and black on an off-white ground, as a continuous repeat.'],m:'3000 × 3000 px',k:['En repetición (seamless)','Seamless repeat']},
-{c:'floral',n:'Floral 02',a:'img/floral-02-elemento.jpg',b:'img/floral-01-rapport.jpg',t:'Flor ilustrada con tinta, elemento solo',d:['Flor suelta con centro de tinta negra y pétalos rojos. Se entrega como elemento individual.','A single flower with a black ink center and red petals. Delivered as an individual element.'],m:'3508 × 2480 px',k:['Diseño único (elemento)','Single design (element)']},
-{c:'animal',n:'Animal 01',o:['Marrón tierra','Earth brown'],w:[['img/animal-01-ciruela.jpg','Ciruela y gris azulado','Plum & blue-grey'],['img/animal-01-oliva.jpg','Oliva y dorado','Olive & gold'],['img/animal-01-rojo.jpg','Rojo oscuro','Deep red']],a:'img/animal-01-rapport.jpg',b:'img/animal-01-mockup.jpg',t:'Estampa animal print en repetición, vista en top',d:['Animal print pintado a mano en tonos tierra, con manchas y textura de pincel.','Hand-painted animal print in earth tones, with brush-texture spots.'],m:'2576 × 2576 px',k:['En repetición (seamless)','Seamless repeat']},
-{c:'toile',n:'Toile 01',a:'img/toile-01-rapport.jpg',b:'img/toile-01-mockup.jpg',t:'Toile de Jouy de campo, vista en vestido',d:['Escena de campo argentino: casco de estancia, molino, aljibe y caballos, dibujada a mano.','Argentine countryside scene: ranch house, windmill, well and horses, hand drawn.'],m:'2576 × 2576 px',k:['Diseño único (localizado)','Single design (placed)']}];
 const SPEC={es:['Medida','Formato','Tipo','Colores','Técnicas'],en:['Size','Format','Type','Colors','Techniques']};
 const VC=['Variantes de color a pedido; el precio depende de la cantidad.', 'Color variants on request; price depends on quantity.'];
 const TECH=['Serigrafía, sublimación, bordado y estampa digital','Screen printing, sublimation, embroidery and digital printing'];
-const C={all:['Todas','All'],floral:['Florales','Floral'],geo:['Geométricos','Geometric'],collage:['Collage','Collage'],toile:['Toile de Jouy','Toile de Jouy'],animal:['Animal','Animal']};
+const C={all:['Todas','All'],floral:['Florales','Floral'],geo:['Geométricos','Geometric'],collage:['Collage','Collage'],abstract:['Abstractas','Abstract'],toile:['Toile de Jouy','Toile de Jouy'],animal:['Animal','Animal']};
 const T={es:{n:'Nombre',e:'Email',s:'Servicio',m:'Mensaje',snd:'Enviar',ok:'¡Gracias! Te respondemos pronto.',er:'No se pudo enviar. Escribinos a '+MAIL,ask:'Pedir presupuesto',
 o:['Estampa del catálogo','Exclusividad de una estampa','Estampa a medida','Tendencias y asesoramiento','Otra consulta']},
 en:{n:'Name',e:'Email',s:'Service',m:'Message',snd:'Send',ok:'Thank you! We will reply soon.',er:'Could not send. Email us at '+MAIL,ask:'Request a quote',
@@ -160,9 +153,9 @@ function form(id){const t=T[L];$(id).innerHTML=`<label>${t.n}<input name="name" 
 function mail(p){const sub=encodeURIComponent((L=='es'?'Presupuesto: ':'Quote: ')+p.n),body=encodeURIComponent(L=='es'?`Hola Tinta! Me interesa la estampa "${p.n}". ¿Me pasan presupuesto? Cantidad de variantes de color y/o cambios que necesito: `:`Hi Tinta! I am interested in the print "${p.n}". Could you send me a quote? Color variants and/or changes I need: `);return `mailto:${MAIL}?subject=${sub}&body=${body}`}
 function show(src,alt){const g=$('#pbig');g.src=src;g.alt=alt;document.querySelectorAll('#pth button').forEach(b=>b.setAttribute('aria-current',b.dataset.s==src))}
 function openP(i){const p=P[i],x=L=='es'?0:1,sp=SPEC[L];
- const th=[[p.a,x?'View':'Ver'],[p.b,'Mock-up'],...(p.w||[]).map(v=>[v[0],v[1+x]])];
+ const th=[[p.a,p.o?p.o[x]:(x?'View':'Ver')],...(p.b?[[p.b,'Mock-up']]:[]),...(p.w||[]).flatMap(v=>[[v[0],v[1+x]],...(v[3]?[[v[3],v[1+x]+' · mock-up']]:[])]),...(p.x||[]).map(v=>[v[0],v[1+x]])];
  $('#pth').innerHTML=th.map(u=>`<button type="button" data-s="${u[0]}" data-a="${u[1]}" title="${u[1]}" aria-label="${u[1]}"><img src="${u[0]}" alt="" width="64" height="64" loading="lazy"></button>`).join('');
- const cols=p.w?(L=='es'?p.w.length+1+' variantes: ':p.w.length+1+' colorways: ')+[p.o[x],...p.w.map(v=>v[1+x])].join(', ')+(L=='es'?'. Más variantes a pedido.':'. More variants on request.'):VC[x];
+ const cols=p.w?(L=='es'?p.w.length+1+' variantes: ':p.w.length+1+' colorways: ')+[p.o[x],...p.w.map(v=>v[1+x])].join(', ')+(L=='es'?'. Más variantes a pedido.':'. More variants on request.'):(p.u?(x?'Single colorway':'Variante única'):VC[x]);
  show(p.a,p.t);
  $('#pinfo').innerHTML=`<h3>${p.n}</h3><p>${p.d[x]}</p><dl><dt>${sp[0]}</dt><dd>${p.m}</dd><dt>${sp[1]}</dt><dd>PNG, TIFF, PDF</dd><dt>${sp[2]}</dt><dd>${p.k[x]}</dd><dt>${sp[3]}</dt><dd>${cols}</dd><dt>${sp[4]}</dt><dd>${TECH[x]}</dd></dl><a class="btn" href="${mail(p)}">${T[L].ask}</a>`;
  $('#pd').showModal()}
@@ -170,7 +163,7 @@ function render(){
  $('.filters').innerHTML=Object.keys(C).map(k=>`<button type="button" data-k="${k}" aria-pressed="${k==cat}">${C[k][L=='es'?0:1]}</button>`).join('');
  const l=P.filter(p=>cat=='all'||p.c==cat);
  $('#grid').innerHTML=l.map(p=>{const i=P.indexOf(p);
- return `<article class="card"><button class="im" type="button" data-i="${i}" aria-label="${p.n}"><img src="${p.a}" alt="${p.t}" width="900" height="1200" loading="lazy"><img src="${p.b}" alt="" width="900" height="1200" loading="lazy"></button><h3>${p.n}</h3><a class="btn" href="${mail(p)}">${T[L].ask}</a></article>`}).join('');
+ return `<article class="card"><button class="im" type="button" data-i="${i}" aria-label="${p.n}"><img src="${p.a}" alt="${p.t}" width="900" height="1200" loading="lazy">${p.b?`<img src="${p.b}" alt="" width="900" height="1200" loading="lazy">`:''}</button><h3>${p.n}</h3><a class="btn" href="${mail(p)}">${T[L].ask}</a></article>`}).join('');
  $('#empty').hidden=l.length>0;
  form('#f1');form('#f2');
 }
@@ -187,7 +180,7 @@ document.addEventListener('submit',async e=>{
  const f=e.target;if(f.tagName!='FORM')return;e.preventDefault();const m=$('.msg',f);
  if(!f.reportValidity())return;
  const fd=Object.fromEntries(new FormData(f));
- if(KEY.startsWith('PEGAR')){location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Consulta web: '+fd.service)}&body=${encodeURIComponent(fd.message+'\n\n'+fd.name+' · '+fd.email)}`;return}
+ if(!KEY||KEY.startsWith('PEGAR')){location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Consulta web: '+fd.service)}&body=${encodeURIComponent(fd.message+'\n\n'+fd.name+' · '+fd.email)}`;return}
  try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_key:KEY,subject:'Consulta web Tinta: '+fd.service,...fd})});
  if(!r.ok)throw 0;m.textContent=T[L].ok;f.reset()}catch(_){m.textContent=T[L].er}});
 const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
